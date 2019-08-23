@@ -1,29 +1,136 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>chatbot</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-        $(document).ready(() => {
-            var socket = io.connect();
-            socket.on('connect', () => {
-                console.log(socket.io.engine.id);
-            })
-            $("button").click(() => {
-                socket.emit('sendmessage', $('input').val());
-            });
-            socket.on('newmessage', (data) => {
-                console.log(data);
-            })
-        })
+      $(document).ready(() => {
+        var myid = "";
+        let linke = window.location.href.split("/");
+        var name = linke[linke.length - 1];
+        var socket = io.connect(window.location.origin, {
+          query: `name=${name}`
+        });
+        socket.on("connect", () => {
+          myid = socket.io.engine.id;
+          $(".myname").text(name);
+        });
+        //get all users list
+        socket.on("allusers", data => {
+          data.data.map(item => {
+            $(".users").append(
+              `<div style="text-align: end" id=${item.id}>${item.name}</div>`
+            );
+          });
+        });
+        //when new user joined
+        socket.on("newuser", data => {
+          $(".users").append(
+            `<div style="text-align: end" id=${data.data.id}>${
+              data.data.name
+            }</div>`
+          );
+        });
+        //when someone got disconnected
+        socket.on("userdisconnected", data => {
+          $(`#${data.data.id}`).remove();
+        });
+
+        $("button").click(() => {
+          let msg = $("input").val();
+          socket.emit("sendmessage", msg);
+          $(".chat").append(`<div class="me"><div><p>${msg}</p></div></div>`);
+          $("input").val("");
+        });
+        //on new message
+        socket.on("newmessage", data => {
+          $(".chat").append(
+            `<div class="others"><div><p>${data.name}</p><p>${
+              data.msg
+            }</p></div></div>`
+          );
+        });
+      });
     </script>
-</head>
+    <style>
+      .maindiv {
+        width: 50%;
+        margin: auto;
+        background: #dadada;
+        border-radius: 10px;
+        height: 60vh;
+      }
+      .chat {
+        height: 50vh;
+      }
+      .me {
+        text-align: end;
+        padding: 5px 10px;
+      }
+      .others {
+        padding: 5px 10px;
+      }
+      .me div {
+        display: inline-block;
+        background: green;
+        padding: 2px 5px;
+        color: white;
+        border-radius: 5px;
+        width: fit-content;
+        /* float: right; */
+      }
+      .others div {
+        /* display: inline; */
+        background: #a78c57;
+        padding: 2px 5px;
+        color: white;
+        border-radius: 5px;
+        width: fit-content;
+      }
+      .me div p,
+      .others div p {
+        margin: 0px;
+      }
+      .me div .name,
+      .others div .name {
+        color: black;
+        font-size: 14px;
+      }
+    </style>
+  </head>
 
-<body>
-    <input class="input" />
-    <button>send</button>
-</body>
+  <body>
+    <div style="display: flex">
+      <div class="maindiv">
+        <div class="chat"></div>
 
+        <div style="text-align: center">
+          <input
+            class="input"
+            style="height: 25px;
+          border-radius: 5px;
+          width: 201px;
+          box-shadow: none;
+          margin-right: 20px"
+          />
+          <button
+            style="height: 30px;
+          width: 50px;
+          border-radius: 5px;"
+          >
+            send
+          </button>
+        </div>
+      </div>
+      <div style="width: 200px; background: #c77a9569;padding-right: 10px">
+        <div class="myname" style="text-align: right"></div>
+        <div style="text-align: end">
+          <p>Users</p>
+        </div>
+
+        <div class="users"></div>
+      </div>
+    </div>
+  </body>
 </html>
