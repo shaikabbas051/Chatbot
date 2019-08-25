@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>chatbot</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
 
-    <script>
-      $(document).ready(() => {
-        $("button").click(() => {
-          var name = $("input").val();
-          window.location = `${name}`;
-        });
+<head>
+  <title>chatbot</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+  <script>
+    $(document).ready(() => {
+      $(".nextpage").click(() => {
+        var name = $("input").val();
+        window.location = `${name}`;
       });
-    </script>
-  </head>
-  <body>
-    <p>Enter Name</p>
-    <input class="input" />
-    <button>
-      Chat
-    </button>
-    <div class="alert alert-success">
-      <strong>Success!</strong> Indicates a successful or positive action.
-    </div>
-    <div class="alert alert-primary" role="alert">
-      This is a primary alert—check it out!
-    </div>
-  </body>
+      $(".check").click(() => {
+        $(".abcd").append('<div id="mine">Apartment</div>');
+      })
+      $(".check1").click(() => {
+        let va = $("#mine").text();
+        console.log(va);
+      })
+    });
+  </script>
+</head>
+
+<body>
+  <p>Enter Name</p>
+  <input class="input" />
+  <button class="nextpage">
+    Chat
+  </button>
+  <button class="check">check</button>
+  <button class="check1">check1</button>
+
+  <div class="abcd"></div>
+  <!-- </div> -->
+</body>
+
 </html>
